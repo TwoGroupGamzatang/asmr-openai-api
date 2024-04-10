@@ -8,6 +8,7 @@ import { env } from './env';
 import { banner } from './libs/banner';
 import { globalErrorHandler } from './middlewares/error';
 import { Logger } from './libs/logger';
+import { connectMongoDB } from './libs/mongoose';
 
 const app = express();
 const log = new Logger(__filename);
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
 app.use(globalErrorHandler);
 
 app.listen(env.app.port, async () => {
+    await connectMongoDB();
+
     console.log(
         `server started on port ${env.app.port}, env: ${process.env.NODE_ENV}`
     );
