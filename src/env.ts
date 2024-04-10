@@ -8,7 +8,7 @@ import {
     getOsPaths,
     normalizePort,
     toBool,
-} from './lib/env';
+} from './libs/env';
 
 /**
  * Load .env file or for tests the .env.test file.
