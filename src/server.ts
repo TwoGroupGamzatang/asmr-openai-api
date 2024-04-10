@@ -3,16 +3,22 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import apiRouter from './api';
+import apiRouter from './controllers';
 import { env } from './env';
+import { banner } from './libs/banner';
+import { globalErrorHandler } from './middlewares/error';
+import { Logger } from './libs/logger';
 
 const app = express();
+const log = new Logger(__filename);
 
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('short'));
+
+banner(log);
 
 // Health Check
 app.get('/api/openai/health', async (req, res) => {
@@ -27,11 +33,7 @@ app.use((req, res, next) => {
 });
 
 // Handling custom error
-app.use((err: any, req: any, res: any, next: any) => {
-    console.error(err.stack);
-
-    res.status(500).send('Internal Server Error');
-});
+app.use(globalErrorHandler);
 
 app.listen(env.app.port, async () => {
     console.log(
