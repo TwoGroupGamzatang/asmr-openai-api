@@ -22,11 +22,11 @@ app.use(morgan('short'));
 banner(log);
 
 // Health Check
-app.get('/api/openai/health', async (req, res) => {
+app.get('/openai/health', async (req, res) => {
     res.send('OK');
 });
 
-app.use('/api/openai', apiRouter);
+app.use('/openai', apiRouter);
 
 // Handling 404
 app.use((req, res, next) => {
@@ -36,13 +36,18 @@ app.use((req, res, next) => {
 // Handling custom error
 app.use(globalErrorHandler);
 
-app.listen(env.app.port, async () => {
-    await connectMongoDB();
-
-    console.log(
-        `server started on port ${env.app.port}, env: ${process.env.NODE_ENV}`
-    );
-});
+connectMongoDB()
+    .then(() => {
+        app.listen(env.app.port, () => {
+            console.log(
+                `server started on port ${env.app.port}, env: ${process.env.NODE_ENV}`
+            );
+        });
+    })
+    .catch((error) => {
+        console.error('Failed to connect to MongoDB:', error);
+        process.exit(1);
+    });
 
 process.on('SIGINT', async () => {
     console.log('Shutting down openai streaming service...');
