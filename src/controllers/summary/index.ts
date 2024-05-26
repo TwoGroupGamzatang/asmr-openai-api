@@ -49,7 +49,8 @@ summaryRouter.post(
             1) Title
             Article Title
             2) Tag extraction
-            Extract up to 3 tags to determine which category the article falls into
+            Extract up to 3 tags to determine which category the article falls into. 
+            categories: 웹 개발, 모바일 앱 개발, UI/UX 디자인, 서버 개발, DB 관리, 아키텍쳐, 보안, 운영배포, 머신러닝, 데이터과학, 생성형 AI, 추천시스템, 프로젝트 계획, 프로젝트 방법론, 프로젝트 관리 도구/기술, 품질관리
             3) Overall summary
             Summarize it into a length that takes about ${readTime} minutes to read.
     
