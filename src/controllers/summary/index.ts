@@ -17,7 +17,7 @@ summaryRouter.post(
     '/',
     validate(summaryRequestSchema),
     catchAsync(async (req, res) => {
-        const userId = req.header('ASMR-User-Id');
+        const userId = req.header('X-ASMR-User-Id');
         const { url, originalText, readTime } = req.body as SummaryRequest;
         logger.info(`${userId} request summarize for ${url}`);
 
