@@ -27,19 +27,11 @@ summaryRouter.post(
         });
 
         if (existSummary) {
-            const copiedSummary = new Summary({
-                userId,
-                url,
-                originalText,
-                readTime,
-                summarizedText: existSummary.summarizedText,
-            });
-
-            await copiedSummary.save();
-
             res.status(StatusCodes.OK).json({
                 summary: existSummary.summarizedText,
             });
+
+            return;
         }
 
         const prompt = `
