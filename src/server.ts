@@ -22,11 +22,11 @@ app.use(morgan('short'));
 banner(log);
 
 // Health Check
-app.get('/openai/health', async (req, res) => {
+app.get('/api/openai/health', async (req, res) => {
     res.send('OK');
 });
 
-app.use('/openai', apiRouter);
+app.use('/api/openai', apiRouter);
 
 // Handling 404
 app.use((req, res, next) => {
